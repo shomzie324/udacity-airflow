@@ -30,7 +30,7 @@ class LoadDimensionOperator(BaseOperator):
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
         
         # provide option of doing truncate-insert
-        if truncate_insert:
+        if self.truncate_insert:
             redshift.run("""
             DELETE FROM {}
             """.format(self.target_table))

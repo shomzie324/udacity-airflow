@@ -16,13 +16,13 @@ default_args = {
     'owner': 'udacity',
     'start_date': datetime(2019, 1, 12),
     'retries': 3,
-    'retry_delay': timedelta(minutes=5),
+    'retry_delay': timedelta(minutes=2),
     'email_on_retry': False,
     'depends_on_past': False,
     'catchup' : False
 }
 
-dag = DAG('udac_example_dag',
+dag = DAG('udac_example_dag2',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
           schedule_interval='@monthly'
