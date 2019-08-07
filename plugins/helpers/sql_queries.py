@@ -43,7 +43,16 @@ class SqlQueries:
     );""")
 
     time_table_insert = ("""
-        INSERT INTO {} (
-        SELECT start_time, extract(hour from start_time), extract(day from start_time), extract(week from start_time), 
-               extract(month from start_time), extract(year from start_time), extract(dayofweek from start_time)
-        FROM songplays);""")
+INSERT INTO time
+(
+SELECT 
+distinct TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second', 
+EXTRACT(HOUR FROM TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second'), 
+EXTRACT(DAY FROM TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second'),
+EXTRACT(WEEK FROM TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second'),
+EXTRACT(MONTH FROM TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second'),
+EXTRACT(YEAR FROM TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second'),
+EXTRACT(DOW FROM TIMESTAMP 'epoch' + ts/1000 *INTERVAL '1 second')
+FROM staging_events
+WHERE page = 'NextSong'
+);""")
